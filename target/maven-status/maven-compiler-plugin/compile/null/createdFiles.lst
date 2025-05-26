@@ -1,0 +1,6 @@
+com\seuprojeto\model\Ong.class
+com\seuprojeto\resource\StatusResource.class
+com\seuprojeto\model\Doacao.class
+META-INF\panache-archive.marker
+com\seuprojeto\model\Usuario.class
+com\seuprojeto\resource\UsuarioResource.class
