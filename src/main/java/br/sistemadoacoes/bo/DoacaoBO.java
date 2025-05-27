@@ -9,6 +9,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
 import java.sql.Date;
+import java.util.List;
 
 @ApplicationScoped
 public class DoacaoBO {
@@ -33,5 +34,9 @@ public class DoacaoBO {
         doacao.persist();
 
         return doacao;
+    }
+
+    public List<Doacao> buscarPorUsuario(Long usuarioId) {
+        return Doacao.find("usuario.id", usuarioId).list();
     }
 }
