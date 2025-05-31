@@ -13,7 +13,7 @@ import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
-@Path("/")
+@Path("/ong") // agora a rota base é /ong
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class OngResource {
@@ -21,18 +21,22 @@ public class OngResource {
     @Inject
     OngBO ongBO;
 
-    // POST /ongregister
     @POST
-    @Path("/ongregister")
+    @Path("/register")
     @Transactional
     public Response criarOng(OngDTO dto) {
         Ong ong = ongBO.criar(dto);
         return Response.status(Response.Status.CREATED).entity(ong).build();
     }
 
-    // GET /ongs/{id}/doacoes
     @GET
-    @Path("/ongs/{id}/doacoes")
+    public Response listarOngs() {
+        List<Ong> ongs = Ong.listAll();
+        return Response.ok(ongs).build();
+    }
+
+    @GET
+    @Path("/{id}/doacoes")
     public Response listarDoacoesRecebidas(@PathParam("id") Long id) {
         Ong ong = ongBO.buscarPorId(id);
         if (ong == null) {
@@ -40,5 +44,15 @@ public class OngResource {
         }
         List<Doacao> doacoes = Doacao.find("ong.id", ong.id).list();
         return Response.ok(doacoes).build();
+    }
+
+    @GET
+    @Path("/{id}")
+    public Response buscarPorId(@PathParam("id") Long id) {
+        Ong ong = ongBO.buscarPorId(id);
+        if (ong == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(ong).build();
     }
 }

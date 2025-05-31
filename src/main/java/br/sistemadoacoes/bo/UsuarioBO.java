@@ -26,7 +26,21 @@ public class UsuarioBO {
         return usuario;
     }
 
+    public Usuario buscarPorEmail(String email) {
+        Usuario usuario = Usuario.find("email", email).firstResult();
+        if (usuario == null) {
+            throw new RecursoNaoEncontradoException("Usuário não encontrado com email: " + email);
+        }
+        return usuario;
+    }
+
     public Usuario criar(UsuarioDTO dto) {
+        // Verifica se o e-mail já está em uso
+        Usuario existente = Usuario.find("email", dto.email).firstResult();
+        if (existente != null) {
+            throw new RecursoNaoEncontradoException("Email já cadastrado");
+        }
+
         Usuario usuario = new Usuario();
         usuario.nome = dto.nome;
         usuario.email = dto.email;
@@ -34,6 +48,7 @@ public class UsuarioBO {
         usuario.tipo = dto.tipo;
         usuario.telefone = dto.telefone;
         usuario.dataCadastro = new Date(System.currentTimeMillis());
+
         usuario.persist();
         return usuario;
     }

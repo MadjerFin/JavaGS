@@ -8,7 +8,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class OngBO {
 
-    // Busca uma ONG pelo ID
     public Ong buscarPorId(Long id) {
         Ong ong = Ong.findById(id);
         if (ong == null) {
@@ -17,8 +16,13 @@ public class OngBO {
         return ong;
     }
 
-    // Cria uma nova ONG com base no DTO
     public Ong criar(OngDTO dto) {
+        // Impede duplicidade pelo CNPJ
+        Ong existente = Ong.find("cnpj", dto.cnpj).firstResult();
+        if (existente != null) {
+            throw new RecursoNaoEncontradoException("Já existe uma ONG cadastrada com este CNPJ.");
+        }
+
         Ong ong = new Ong();
         ong.nome = dto.nome;
         ong.email = dto.email;

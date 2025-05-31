@@ -28,11 +28,5 @@ public class DoacaoResource {
         return Response.status(Response.Status.CREATED).entity(doacao).build();
     }
 
-    // GET /profile?usuarioId=...
-    @GET
-    @Path("/profile")
-    public Response listarDoacoesUsuario(@QueryParam("usuarioId") Long usuarioId) {
-        List<Doacao> doacoes = doacaoBO.buscarPorUsuario(usuarioId);
-        return Response.ok(doacoes).build();
-    }
+
 }
