@@ -29,4 +29,10 @@ public class Ong extends PanacheEntityBase {
 
     @Column(name = "CNPJ", nullable = false, unique = true)
     public String cnpj;
+
+    @Column(name = "MISSAO")
+    public String missao;
+
+    @Column(name = "CATEGORIA")
+    public String categoria;
 }

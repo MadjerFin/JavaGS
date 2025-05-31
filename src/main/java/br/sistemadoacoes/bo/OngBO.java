@@ -17,7 +17,6 @@ public class OngBO {
     }
 
     public Ong criar(OngDTO dto) {
-        // Impede duplicidade pelo CNPJ
         Ong existente = Ong.find("cnpj", dto.cnpj).firstResult();
         if (existente != null) {
             throw new RecursoNaoEncontradoException("Já existe uma ONG cadastrada com este CNPJ.");
@@ -30,6 +29,8 @@ public class OngBO {
         ong.site = dto.site;
         ong.endereco = dto.endereco;
         ong.cnpj = dto.cnpj;
+        ong.missao = dto.missao;
+        ong.categoria = dto.categoria;
         ong.persist();
         return ong;
     }

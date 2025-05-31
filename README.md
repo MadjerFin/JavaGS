@@ -1,16 +1,16 @@
 # ❄️ Sistema de Doações de Inverno
 
-Uma plataforma que conecta cidadãos a ONGs, permitindo doações de itens e valores monetários para ajudar pessoas em situação de vulnerabilidade durante o inverno.
+Plataforma web desenvolvida em Java com Quarkus que conecta cidadãos a ONGs, permitindo doações de itens e valores para ajudar pessoas em situação de vulnerabilidade durante o inverno.
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-- ✅ Java 17  
-- ✅ Quarkus 3.2.5  
-- ✅ Hibernate ORM + Panache  
-- ✅ RESTEasy Reactive  
-- ✅ Oracle Database
+- Java 17  
+- Quarkus 3.2.5  
+- Hibernate ORM com Panache  
+- RESTEasy Reactive  
+- Oracle Database
 
 ---
 
@@ -19,83 +19,68 @@ Uma plataforma que conecta cidadãos a ONGs, permitindo doações de itens e val
 ```
 src/main/java/br/sistemadoacoes/
 ├── model       → Entidades JPA (Usuario, Ong, Doacao)
-├── dto         → Objetos de transferência (DTOs)
-├── resource    → Endpoints REST
-├── bo          → Camada de regras de negócio (Business Object)
-└── exception   → Tratamento de exceções personalizadas
+├── dto         → Objetos de Transferência (DTOs)
+├── resource    → Endpoints RESTful da API
+├── bo          → Camada de Regras de Negócio (Business Object)
+└── exception   → Exceções Personalizadas
 ```
 
 ---
 
 ## 🔁 Endpoints da API
 
-### 📌 Usuários
+### 👤 Usuários
 
-| Método | Rota             | Descrição                   |
-|--------|------------------|-----------------------------|
-| POST   | `/usuarios`      | Cadastra um novo usuário    |
-| GET    | `/usuarios`      | Lista todos os usuários     |
-| POST   | `/usuarios/login`| Realiza login               |
-
-**Exemplo JSON (POST /usuarios):**
-```json
-{
-  "nome": "João",
-  "email": "joao@email.com",
-  "senha": "123456",
-  "tipo": "cidadao",
-  "telefone": "11999999999"
-}
-```
+| Método | Rota         | Descrição                         |
+|--------|--------------|-----------------------------------|
+| POST   | `/register`  | Cadastra um novo usuário          |
+| POST   | `/login`     | Autentica um usuário              |
+| PUT    | `/update`    | Atualiza dados do usuário         |
+| DELETE | `/update`    | Remove usuário com e-mail/senha   |
 
 ---
 
-### 📌 ONGs
+### 🏢 ONGs
 
-| Método | Rota                | Descrição                        |
-|--------|---------------------|----------------------------------|
-| POST   | `/ongs`             | Cadastra uma nova ONG           |
-| GET    | `/ongs/{id}/doacoes`| Lista doações recebidas pela ONG|
-
-**Exemplo JSON (POST /ongs):**
-```json
-{
-  "nome": "ONG Frio Zero",
-  "email": "contato@friozero.org",
-  "telefone": "1122223333",
-  "site": "https://friozero.org",
-  "endereco": "Rua A, 123",
-  "cnpj": "12.345.678/0001-99"
-}
-```
+| Método | Rota                  | Descrição                              |
+|--------|-----------------------|----------------------------------------|
+| POST   | `/ong/register`       | Registra uma nova ONG                  |
+| GET    | `/ong`                | Lista todas as ONGs                    |
+| GET    | `/ong/{id}`           | Busca ONG por ID                       |
+| GET    | `/ong/{id}/doacoes`   | Lista as doações recebidas por uma ONG|
 
 ---
 
-### 📌 Doações
+### 💸 Doações
 
-| Método | Rota        | Descrição               |
-|--------|-------------|-------------------------|
-| POST   | `/doacoes`  | Realiza uma nova doação |
-| GET    | `/doacoes`  | Lista todas as doações  |
-
-**Exemplo JSON (POST /doacoes):**
-```json
-{
-  "tipoDoacao": "Cobertores e alimentos",
-  "valor": 100.0,
-  "usuarioId": 1,
-  "ongId": 1
-}
-```
+| Método | Rota           | Descrição                   |
+|--------|----------------|-----------------------------|
+| POST   | `/help-center` | Realiza uma nova doação     |
 
 ---
 
-## ⚠️ Observações
+### 🧾 Perfil do Usuário
 
-- O projeto utiliza **DTOs** para entrada de dados, separando a lógica de entidades.
-- Toda a lógica de negócio é concentrada na **camada BO**.
-- Tratamento de erros com exceções personalizadas (`RecursoNaoEncontradoException`).
-- API organizada e preparada para integração futura com um front-end moderno.
+| Método | Rota       | Descrição                                |
+|--------|------------|------------------------------------------|
+| GET    | `/profile` | Retorna dados do usuário e suas doações  |
+
+---
+
+### 📡 Status da API
+
+| Método | Rota   | Descrição                     |
+|--------|--------|-------------------------------|
+| GET    | `/`    | Verifica se a API está online |
+
+---
+
+## ⚙️ Observações
+
+- O projeto utiliza DTOs para separar entrada de dados da lógica de persistência.
+- Toda a lógica de negócio está encapsulada na camada `bo`.
+- Exceções personalizadas tratam erros de forma elegante.
+- A API está estruturada para integração com front-end moderno (ex: Next.js).
 
 ---
 
